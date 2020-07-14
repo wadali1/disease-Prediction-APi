@@ -6,10 +6,10 @@ import pandas as pd
 from helper import disease,l1
 import joblib
 
-#https://raw.githubusercontent.com/Lovely-Professional-University-CSE/int247-machine-learning-project-2020-kem031-sudhanshu/master/Dataset/training.csv
+
 #Reading the training .csv file
-df=pd.read_csv("https://raw.githubusercontent.com/Lovely-Professional-University-CSE/int247-machine-learning-project-2020-kem031-sudhanshu/master/Dataset/training.csv")
-DF= pd.read_csv('https://raw.githubusercontent.com/Lovely-Professional-University-CSE/int247-machine-learning-project-2020-kem031-sudhanshu/master/Dataset/training.csv', index_col='prognosis')
+df=pd.read_csv("training.csv")
+DF= pd.read_csv('training.csv', index_col='prognosis')
 df.replace({'prognosis':{'Fungal infection':0,'Allergy':1,'GERD':2,'Chronic cholestasis':3,'Drug Reaction':4,
     'Peptic ulcer diseae':5,'AIDS':6,'Diabetes ':7,'Gastroenteritis':8,'Bronchial Asthma':9,'Hypertension ':10,
     'Migraine':11,'Cervical spondylosis':12,
@@ -25,9 +25,8 @@ y = df[["prognosis"]]
 np.ravel(y)
 #print(X)
 #Reading the  testing.csv file
-tr=pd.read_csv("https://raw.githubusercontent.com/Lovely-Professional-University-CSE/int247-machine-learning-project-2020-kem031-sudhanshu/master/Dataset/testing.csv")
+tr=pd.read_csv("testing.csv")
 
-#Using inbuilt function replace in pandas for replacing the values
 
 tr.replace({'prognosis':{'Fungal infection':0,'Allergy':1,'GERD':2,'Chronic cholestasis':3,'Drug Reaction':4,
     'Peptic ulcer diseae':5,'AIDS':6,'Diabetes ':7,'Gastroenteritis':8,'Bronchial Asthma':9,'Hypertension ':10,
@@ -41,8 +40,7 @@ tr.replace({'prognosis':{'Fungal infection':0,'Allergy':1,'GERD':2,'Chronic chol
 X_test= tr[l1]
 y_test = tr[["prognosis"]]
 np.ravel(y_test)
-#print(X_test)
-#Random forest
+
 from sklearn.ensemble import RandomForestClassifier
 clf4 = RandomForestClassifier(n_estimators=100)
 clf4 = clf4.fit(X,np.ravel(y))
