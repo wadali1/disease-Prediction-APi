@@ -12,6 +12,17 @@ async def index():
 	return {"Api":"Welcome To Disease Prediction Api"}
 
 
+##for calculating BMI
+##http://127.0.0.1:8000/bmi?hfeet=6&hinches=1&weight=100
+
+@app.get('/bmi')
+async def BMI(hfeet:float= Query(None),hinches:float= Query(None),weight:float= Query(None)):
+	height=(12*hfeet+hinches)*0.0254 #inches to meter conversion
+	bmi = weight/(height**2)
+	bmi="Your BMI is: {:.1f}".format(bmi)
+	return bmi
+
+
 
 @app.get('/predict')
 async def predict(s1:str= Query(None),s2:str= Query(None),s3:str= Query(None),s4:str= Query(None),s5:str= Query(None)):
