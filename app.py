@@ -26,7 +26,6 @@ async def BMI(hfeet:float= Query(None),hinches:float= Query(None),weight:float= 
 #countries list
 @app.get('/countries')
 async def country():
-def country():
     l={}
     url="http://emergencynumberapi.com/api/data/all"
     r=req.get(url)
