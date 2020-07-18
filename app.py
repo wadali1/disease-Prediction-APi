@@ -26,13 +26,16 @@ async def BMI(hfeet:float= Query(None),hinches:float= Query(None),weight:float= 
 #countries list
 @app.get('/countries')
 async def country():
-    l=[]
+def country():
+    l={}
     url="http://emergencynumberapi.com/api/data/all"
     r=req.get(url)
     w=r.json()
+    x=0
     for i in w:
         if i['Ambulance']['All'][0]!=None:
-            l.append(i['Country']['Name'])
+            l.update({x:i['Country']['Name']})
+            x=x+1
     return l
 
 @app.get('/country')
@@ -46,8 +49,7 @@ async def getContactByCountry(country:str=Query(None)):
             l.append(i['Ambulance']['All'])
             break
     if l[0][0]!=None:
-        return l[0][0]
-    
+        return {"number":l[0][0]}
     
 
 @app.get('/predict')
