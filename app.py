@@ -1,6 +1,7 @@
 from models_result import models_predict
 from fastapi import FastAPI,Query 
 import uvicorn 
+import requests as req
 
 #init app
 app=FastAPI()
@@ -22,7 +23,32 @@ async def BMI(hfeet:float= Query(None),hinches:float= Query(None),weight:float= 
 	bmi="Your BMI is: {:.1f}".format(bmi)
 	return bmi
 
+#countries list
+@app.get('/countries')
+async def country():
+    l=[]
+    url="http://emergencynumberapi.com/api/data/all"
+    r=req.get(url)
+    w=r.json()
+    for i in w:
+        if i['Ambulance']['All'][0]!=None:
+            l.append(i['Country']['Name'])
+    return l
 
+@app.get('/country')
+async def getContactByCountry(country:str=Query(None)):
+    l=[]
+    url="http://emergencynumberapi.com/api/data/all"
+    r=req.get(url)
+    w=r.json()
+    for i in w:
+        if country==i['Country']['Name']:
+            l.append(i['Ambulance']['All'])
+            break
+    if l[0][0]!=None:
+        return l[0][0]
+    
+    
 
 @app.get('/predict')
 async def predict(s1:str= Query(None),s2:str= Query(None),s3:str= Query(None),s4:str= Query(None),s5:str= Query(None)):
